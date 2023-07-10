@@ -1,2 +1,2 @@
 # JPEC
-Julia package for pedigree correction in animal and plant breeding
+Julia package (Binary format) for pedigree correction in animal and plant breeding
