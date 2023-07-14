@@ -16,6 +16,6 @@ git clone git clone https://github.com/TXiang-lab/JPEC.git
 	   --ped  ped.txt \              # pedgiree file
 	   --findex 1 \                  # index of finding parents, 1 means only find father, 2 means only find Mother, 3 means both find father and mother
 	   --score \                     # write the score matrix for each comparsion between offspring and parents   
-	   --o /data2/fck/test2 \        # output path of JEPC
+	   --o /data2/result \        # output path of JEPC
            --julia-args --threads=20     # Julia arguments, specify the number of threads used in JPEC
 ```
