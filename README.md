@@ -4,9 +4,9 @@
 
 -   [Overview](#overview)
 -   [Installation](#installation)
--   [Data preparation](#Data-preparation)
+-   [Data preparation](#data-preparation)
 -   [Usage](#usage)
--   [Output](#Output)
+-   [Output](#output)
 
 ------------------------------------------------------------------------
 ### <u>Overview</u>
