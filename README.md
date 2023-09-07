@@ -23,7 +23,7 @@
 
 ```R
 git lfs install  #key step
-git clone git clone https://github.com/TXiang-lab/JPEC.git
+git clone https://github.com/TXiang-lab/JPEC.git
 ```
 
 ### <u>Data preparation</u>
