@@ -11,7 +11,7 @@
 ------------------------------------------------------------------------
 ### <u>Overview</u>
 
-`JPEC` is a useful and user-friendly tool for pedigree correction in animal breeding, especially when users doubt the accuracy of the pedigree records.  This is the update Julia version of our R package **rPEC**. 
+`JPEC` is a useful and user-friendly tool for pedigree correction in animal and plant breeding, especially when users doubt the accuracy of the pedigree records.  This is the update Julia version of our R package **rPEC**. 
 
 **Haplotype file** in **VCF** format which has been phased by phasing software like **Beagle**, and  **LD blocks**  which are constructed by **Plink**, are necessary.
 
