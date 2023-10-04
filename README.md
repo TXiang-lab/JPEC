@@ -26,6 +26,12 @@ git lfs install  #key step
 git clone https://github.com/TXiang-lab/JPEC.git
 ```
 
+In the situation where the user can not download the JPEG as shown above, users can download it as follows:
+、、、R
+wget https://github.com/TXiang-lab/JPEC/releases/download/V1.0.0/JPECCompiled.zip
+unzip JPECCompiled.zip
+、、、
+
 ### <u>Data preparation</u>
 
 #### ①Pedigree
