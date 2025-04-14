@@ -19,18 +19,17 @@
 
 ### <u>Installation</u>
 
-#### Install JEPC via github
+⚠️**Attention!: Using "git clone https://github.com/TXiang-lab/JPEC.git" or clicking on 'Download ZIP' in 'Code' cannot download the complete JPEC package because it contains large files, so please intall JPEC via approaches below.** 
 
-```R
-git lfs install  #key step
-git clone https://github.com/TXiang-lab/JPEC.git
-```
+#### Install JEPC package from Releases
 
-**👉 Note:In the situation where the user can not download the JPEG as shown above, users can download it as follows:** 
 ```R
 wget https://github.com/TXiang-lab/JPEC/releases/download/V1.0.0/JPECCompiled.zip
 unzip JPECCompiled.zip
 ```
+
+👉 **Note**: If (Chinese mainland) users can not download JPEG as shown above, please click on **V1.0.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.0.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC** by yourself. Thank you very much.
+
 
 ### <u>Data preparation</u>
 
