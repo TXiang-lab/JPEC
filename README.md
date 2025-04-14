@@ -35,7 +35,7 @@ unzip JPECCompiled.zip
 
 #### ①Pedigree
 
-It can be four or five columns(NO tittle). 4 columns are id, sire, dam, and generation(e.g.1)/birthday(e.g.20231001). The extra fifth column is sex, represented by **F** and **M**.
+It can be four or five columns (NO colnames). The four columns include **id**, **sire**, **dam**, and **generation** (e.g.1)/ **birthday** (e.g.20231001). The extra fifth column is **sex**, represented by **F** and **M**.
 
 ``` R
 54903 0 0 1
