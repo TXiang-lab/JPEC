@@ -15,7 +15,7 @@
 
 **Haplotype file** in **VCF** format which has been phased by phasing software like **Beagle**, and  **LD blocks**  which are constructed by **Plink**, are necessary.
 
-**Note that** only individuals who and whose parent have genotypes would be checked. Apart from **Haplotype file** and **LD blocks**, `JPEC`  can be used under three situations below: 1. providing **pedigree**; 2.  providing **pedigree** and **target individuals' id**; 3. providing **target individuals' id** and **candidate individuals' id**.
+**Note that** only individuals who and whose parent have genotypes would be checked. Apart from **Haplotype file** and **LD blocks**, `JPEC`  can be used in three scenarios including: 1. providing **pedigree**; 2.  providing **pedigree** and **target individuals' id**; 3. providing **target individuals' id** and **candidate individuals' id**.
 
 ### <u>Installation</u>
 
