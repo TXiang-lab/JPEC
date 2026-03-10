@@ -136,7 +136,7 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 
 ◼ **--gen [number]**: generation gap between offspring and parent when the 4th column of pedigree is generation. Default: **1**.
 
-◼ **--day [number]**: minimum interval in days between offspring and parent when the the 4th column of pedigree is generation, can be calculated **automatically**.
+◼ **--int [number]**: minimum interval in days between offspring and parent when the the 4th column of pedigree is generation, can be calculated **automatically**.
 
 ◼ **--offspring [target_individuals.txt]**: file of target individuals, one column.
 
