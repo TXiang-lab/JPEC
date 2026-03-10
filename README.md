@@ -1,25 +1,30 @@
 # JPEC <img src="https://img.shields.io/badge/Issues-%2B-brightgreen.svg" /><img src="https://img.shields.io/badge/license-GPL3.0-blue.svg" />    
-### Julia package (Binary version) for pedigree correction in animal and plant breeding
+### A Julia package (Binary version) for pedigree correction in animal and plant breeding
 ## Contents
 
 -   [Overview](#overview)
 -   [Installation](#installation)
--   [Data preparation](#data-preparation)
--   [Usage](#usage)
+-   [Input](#Input)
+-   [Usage](#Usage)
 -   [Output](#output)
 
 ------------------------------------------------------------------------
 ### <u>Overview</u>
 
-`JPEC` is a useful and user-friendly tool for pedigree correction in animal and plant breeding, especially when users doubt the accuracy of the pedigree records.  This is the update Julia version of our R package **rPEC**. 
+`JPEC` is a user-friendly tool for pedigree correction in animal and plant breeding, especially for users when would like to check the accuracy of the pedigree records. 
 
-**Haplotype file** in **VCF** format which has been phased by phasing software like **Beagle**, and  **LD blocks**  which are constructed by **Plink**, are necessary.
+`JPEC` is programmed in Julia. To run JPEC, **genotypes** and **LD blocks** are mandatory. Only individuals who and whose parent have genotypes could be included in predigree correction.
 
-**Note that** only individuals who and whose parent have genotypes would be checked. Apart from **Haplotype file** and **LD blocks**, `JPEC`  can be used in three scenarios including: 1. providing **pedigree**; 2.  providing **pedigree** and **target individuals' id**; 3. providing **target individuals' id** and **candidate individuals' id**.
+Additional files are required depending on the objective:
+
+1. **pedigree**: required to correct the entire pedigree.
+2. **pedigree** and **target individuals**: required to correct the parents of target individuals in the pedigree.
+3. **target individuals** and **candidate individuals**: required to correct the parents of target individuals using candidate individuals.
+
 
 ### <u>Installation</u>
 
-⚠️**Attention!: Using "git clone https://github.com/TXiang-lab/JPEC.git" or clicking on 'Download ZIP' in 'Code' cannot download the complete JPEC package because it contains large files, so please intall JPEC via approaches below.** 
+⚠️ **Attention:** You may not be able to download `JPEC` using `git clone https://github.com/TXiang-lab/JPEC.git` or by clicking **Code → Download ZIP**, because the repository contains large files. Please install `JPEC` using the method below.
 
 #### Install JEPC package from Releases
 
@@ -28,14 +33,14 @@ wget https://github.com/TXiang-lab/JPEC/releases/download/V1.0.0/JPECCompiled.zi
 unzip JPECCompiled.zip
 ```
 
-👉 **Note**: If (Chinese mainland) users can not download JPEG as shown above, please click on **V1.0.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.0.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC** by yourself. Thank you very much.
+👉 **Note**: If (Chinese mainland) users can not download JPEG using the method above, please click on **V1.0.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.0.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC**.
 
 
-### <u>Data preparation</u>
+### <u>Input</u>
 
-#### ①Pedigree
+#### 1.Pedigree
 
-It can be four or five columns (NO colnames). The four columns include **id**, **sire**, **dam**, and **generation** (e.g.1)/ **birthday** (e.g.20231001). The extra fifth column is **sex**, represented by **F** and **M**.
+It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and **generation** (e.g. `1`) or **birthday** (e.g. `20231001`). An optional fifth column, **sex**, may also be included and should be coded as **F** or **M**.
 
 ``` R
 54903 0 0 1
@@ -51,9 +56,9 @@ It can be four or five columns (NO colnames). The four columns include **id**, *
 57052 0 0 1
 ```
 
-#### ② VCF (ONLY autosomes)
+#### 2.Genotypes
 
-Haplotype data in VCF format is recommended to be phased by software **Beagle5.2**.
+Genotypes should be phased into haplotypes in VCF format. We recommend using **Beagle 5.2** for phasing.
 
 ``` R
 ##fileformat=VCFv4.2
@@ -78,21 +83,18 @@ Haplotype data in VCF format is recommended to be phased by software **Beagle5.2
 1       769890  M79     T       A       .       PASS    .       GT      0|0     1|0     0|0     0|1     0|0     0|0     0|0     0|0     0|0
 ```
 
-PLUS: 
+Download **Beagle 5.2** here:  
+https://faculty.washington.edu/browning/beagle/b5_2.html#download
 
-Download linkage of **Beagle5.2** 
+Example command for phasing and imputing with **Beagle 5.2**:
 
-https://faculty.washington.edu/browning/beagle/beagle.html#download
-
-command of phasing and imputing by software **Beagle5.2** 
-
-``` {.r}
-java -Xmx50g -jar beagle.5.2.jar gt=genotype_file.vcf out=out_put_file_name impute=true nthreads=10
+```bash
+java -Xmx50g -jar beagle.5.2.jar gt=genotype_file.vcf out=output_file_name impute=true nthreads=10
 ```
 
-#### ③ LD blocks
+#### 3.LD blocks
 
-LD blocks (**plink.blocks.det**) are recommended to be constructed by software **PLink1.9**
+We recommend using **PLink1.9** for constructing LD blocks (**plink.blocks.det**) from **genotypes**.
 
 ``` R
  CHR          BP1          BP2           KB  NSNPS SNPS
@@ -106,15 +108,12 @@ LD blocks (**plink.blocks.det**) are recommended to be constructed by software *
    1      6577500      6666710       89.211      9 M740|M741|M742|M743|M746|M747|M748|M751|M753
 ```
 
-PLUS: 
-
-Download linkage of **PLink1.9**
-
+Download **PLink1.9** here:  
 https://www.cog-genomics.org/plink/
 
-command of constructing LD blocks by software **PLink1.9**
+Example command for phasing and imputing with **PLink1.9**:
 
-``` {.r}
+```bash
 plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 ```
 
@@ -122,30 +121,30 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 
 #### 🌈Usage of JPEC in Linux
 
-``` R
+```bash
 ../bin/JPEC \
-	   --blocks  plink.blocks.det \  # generated by Plink
-	   --vcf  haplotype.vcf \            # phased vcf file
-	   --ped  ped.txt \              # pedgiree file with 4 columns
-	   --findex 1 \                  # index of finding parents, 1 means only find father, 2 means only find Mother, 3 means both find father and mother
-	   --score \                     # write the score matrix for each comparsion between offspring and parents   
-	   --o /result \        # output path of JEPC
-       --julia-args --threads=20     # Julia arguments, specify the number of threads used in JPEC
+  --blocks plink.blocks.det \      # LD blocks
+  --vcf haplotype.vcf \            # genotypes
+  --ped ped.txt \                  # pedigree file with 4 columns
+  --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
+  --score \                        # write the score matrix for each comparison between offspring and parents
+  --o /result \                    # output path of JPEC
+  --julia-args --threads=20        # Julia arguments: specify the number of threads used
 ```
 
 ##### **Parameter:**
 
-◼ **--gen [number]** specifies the generation between a kid and a parent when the forth column of the pedigree is generation, default is **1**.
+◼ **--gen [number]**: generation gap between offspring and parent when the 4th column of pedigree is generation. Default: **1**.
 
-◼ **--day [number]** specifies the least interval days between a kid and a parent when the forth column of the pedigree is birthday, which can be calculated **automatically**.
+◼ **--day [number]**: minimum interval in days between offspring and parent when the the 4th column of pedigree is generation, can be calculated **automatically**.
 
-◼ **--offspring [target_individuals.txt]** specifies target individuals file with one column.
+◼ **--offspring [target_individuals.txt]**: file of target individuals, one column.
 
-◼ **--parents [candidate_individuals.txt]** specifies candidate individuals file with one column.
+◼ **--parents [candidate_individuals.txt]**: file of candidate individuals, one column.
 
 ## <u>Output</u>
 
-**JPEC_vs_Original_Sire.txt** shows the individuals whose parents are corrected, the first column is the individuals' id, the second column is their original parents, and the third column is their parents corrected by JPEC.
+**JPEC_vs_Original_Sire.txt** lists the individuals whose parents were corrected. The first column contains the offspring ID, the second column contains the original parent, and the third column contains the parent corrected by JPEC.
 
 ``` R
 offspring Original JPEC
@@ -156,7 +155,7 @@ offspring Original JPEC
 76720 66740 67916
 ```
 
-**JPEC_ped.txt** is the corrected pedigree, 4 columns are id, sire, dam, generation/birthday.
+**JPEC_ped.txt** is the corrected pedigree. Its 4 columns are id, sire, dam, generation/birthday.
 
 ``` R
 76080 63032 67598 3
@@ -171,7 +170,7 @@ offspring Original JPEC
 76720 67916 66079 3
 ```
 
-**JPEC_Sire_socred_matrix.txt** is the score of each candidate individuals per target individual.
+**JPEC_Sire_scored_matrix.txt** contains the matching scores between target individuals and candidate sires if you search only for sires using `--findex 1`. Column names are candidate sires, and row names are target individuals. If you search only for dams using `--findex 2`, the output file will be **JPEC_Dam_scored_matrix.txt**. If you search for both sires and dams using `--findex 3`, both output files will be generated.
 
 ``` R
 Offspring_Parents	61202	58769	60903	59261	57881	59926	60884	60886	57726	60896	58864	59150	56463	59815	57558	54903	59990	57052	63032	64806	62673	64712	69518	65120	66269	65365	67916	66740
@@ -185,7 +184,7 @@ Offspring_Parents	61202	58769	60903	59261	57881	59926	60884	60886	57726	60896	58
 65365	0.2947496911894904	0.39185021501945416	0.4318025576267659	0.3017924547788029	0.359381620463014	0.32427710818971117	0.9676875526833381	0.4247592780477176	0.3734560704240447	0.38013552468713574	0.35385510609178	0.3188913751851087	0.2740384333303562	0.2949593351988206	0.3356550972824024	0.26369804758397053	0.2963447222564031	0.2838889170378491
 ```
 
-**JPEC_Sire_off_id.txt** is target individuals in pedigree.
+**JPEC_Sire_off_id.txt** contains the target individuals for sire identification in the pedigree when only a pedigree file is provided and you search only for sires using `--findex 1`. **JPEC_Dam_off_id.txt** contains the target individuals for dam identification in the pedigree when only a pedigree file is provided and you search only for dams using `--findex 2`. Both output files will be generated if you search for both sires and dams using `--findex 3`. Both files use the format below.
 
 ``` R
 off_id
@@ -199,7 +198,8 @@ off_id
 65365
 ```
 
-**JPEC_Sire_par_id.txt** is candidate individuals in pedigree.
+**JPEC_Sire_par_id.txt** contains the candidate sires for parent identification in the pedigree when only a pedigree file is provided and you serach only for sires using `--findex 1`. **JPEC_Dam_par_id.txt** contains the candidate individuals for dam identification in the pedigree when only a pedigree file is provided and you search only for dams using `--findex 2`. Both output files will be generated if you search for both sires and dams using `--findex 3`. Both files use the format below.
+
 
 ``` R
 par_id
