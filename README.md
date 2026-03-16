@@ -40,7 +40,7 @@ unzip JPECCompiled.zip
 
 #### 1.Pedigree
 
-It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and **generation** (e.g. `1`) or **birthday** (e.g. `20231001`). An optional fifth column, **sex**, may also be included and should be coded as **F** or **M**.
+It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and **generation** (e.g. `1`) or **birth date** (e.g. `20231001`). An optional fifth column, **sex**, may also be included and should be coded as **F** for female or **M** for male.
 
 ``` R
 54903 0 0 1
@@ -136,7 +136,7 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 
 ◼ **--gen [number]**: generation gap between offspring and parent when the 4th column of pedigree is generation. Default: **1**.
 
-◼ **--int [number]**: minimum interval in days between offspring and parent when the the 4th column of pedigree is generation, can be calculated **automatically**.
+◼ **--int [number]**: minimum offspring–parent interval (in days), used when the 4th column of the pedigree file is the birth date. If the user does not specify this option, it is computed **automatically** as the minimum birth-date difference across all recorded offspring–parent pairs in the pedigree.
 
 ◼ **--offspring [target_individuals.txt]**: file of target individuals, one column.
 
@@ -212,21 +212,6 @@ par_id
 60884
 60886
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
