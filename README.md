@@ -40,7 +40,10 @@ unzip JPECCompiled.zip
 
 #### 1.Pedigree
 
-It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and **generation** (e.g. `1`) or **birth date** (e.g. `20231001`). An optional fifth column, **sex**, may also be included and should be coded as **F** for female or **M** for male.
+It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and either **generation** (e.g. `1`, as an integer) or **birth date** (e.g. `20231001`, as an integer). An optional fifth column, **sex**, may also be included and should be coded as **F** for female or **M** for male. 
+
+For pedigrees with overlapping generations such as `1.5`, we recommend using the `trace_pedigree` function in the R package [blupADC](https://github.com/TXiang-lab/blupADC) to trace and reorder the pedigree from older to younger individuals. The reordered pedigree can then be used directly as the input pedigree for JPEC.
+
 
 ``` R
 54903 0 0 1
@@ -212,6 +215,21 @@ par_id
 60884
 60886
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
