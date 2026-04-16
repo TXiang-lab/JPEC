@@ -11,20 +11,37 @@
 ------------------------------------------------------------------------
 ### <u>Overview</u>
 
-`JPEC` is a user-friendly tool for pedigree correction in animal and plant breeding, especially for users when would like to check the accuracy of the pedigree records. 
+`JPEC` is a user-friendly tool for pedigree error correction in animal and plant breeding. It is especially useful for checking the accuracy of recorded pedigree information and identifying likely parentage errors.
 
-`JPEC` is programmed in Julia. To run JPEC, **genotypes** and **LD blocks** are mandatory. Only individuals who and whose parent have genotypes could be included in predigree correction.
+`JPEC` is implemented in Julia. To run JPEC, **genotypes** and **LD blocks** are required. Only individuals with genotypes, and whose candidate parents also have genotypes, can be included in pedigree correction.
 
-Additional files are required depending on the objective:
+Depending on the analysis objective, different input combinations are supported:
 
-1. **pedigree**: required to correct the entire pedigree.
-2. **pedigree** and **target individuals**: required to correct the parents of target individuals in the pedigree.
-3. **target individuals** and **candidate individuals**: required to correct the parents of target individuals using candidate individuals.
+1. **Pedigree only**  
+   Correct the pedigree using recorded pedigree information together with genomic data.
 
+2. **Pedigree + target individuals**  
+   Correct the parents of the target individuals in the pedigree.
 
-### <u>Installation</u>
+3. **Target individuals + candidate individuals**  
+   Correct the parents of the target individuals using the provided candidate individuals.
 
-⚠️ **Attention:** You may not be able to download `JPEC` using `git clone https://github.com/TXiang-lab/JPEC.git` or by clicking **Code → Download ZIP**, because the repository contains large files. Please install `JPEC` using the method below.
+In addition, JPEC provides an optional **sire–dam swap check**. This module can use:
+
+- pedigree evidence only,
+- chrX-based sex inference only, or
+- both pedigree and chrX evidence together.
+
+This function is useful for identifying records in which the sire and dam may have been entered in reversed columns.
+
+---
+
+## <u>Installation</u>
+
+⚠️ **Attention:** You may not be able to download `JPEC` using
+
+```bash
+git clone https://github.com/TXiang-lab/JPEC.git
 
 #### Install JEPC package from Releases
 
