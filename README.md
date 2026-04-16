@@ -15,16 +15,17 @@
 
 `JPEC` is implemented in Julia. To run JPEC, **genotypes** and **LD blocks** are required. Only individuals with genotypes, and whose candidate parents also have genotypes, can be included in pedigree correction.
 
-Depending on the analysis objective, different input combinations are supported:
+JPEC provides a flexible framework for defining target offspring and candidate parents.
+Because **genotypes** and **LD blocks** are mandatory for all analyses, different analysis objectives are specified through the additional input files:
 
 1. **Pedigree only**  
-   Correct the pedigree using recorded pedigree information together with genomic data.
+   JPEC automatically derives target offspring and candidate parents from the pedigree and attempts to correct all eligible parentage records. In this setting, the search is constrained by pedigree-based rules such as **delta_generation** or **delta_days**.
 
-2. **Pedigree + target individuals**  
-   Correct the parents of the target individuals in the pedigree.
+2. **Pedigree + target offspring**  
+   JPEC attempts to correct the parents of the specified target offspring, while candidate parents are identified from the pedigree under the same pedigree-based constraints.
 
-3. **Target individuals + candidate individuals**  
-   Correct the parents of the target individuals using the provided candidate individuals.
+3. **Target offspring + candidate parents**  
+   JPEC attempts to correct the parents of the specified target offspring using only the provided candidate parents.
 
 In addition, JPEC provides an optional **sire–dam swap check**. This module can use:
 
