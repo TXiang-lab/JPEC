@@ -19,7 +19,7 @@ JPEC provides a flexible framework for defining target offspring and candidate p
 Because **genotypes** and **LD blocks** are mandatory for all analyses, different analysis objectives are specified through the additional input files:
 
 1. **Pedigree only**  
-   JPEC automatically derives target offspring and candidate parents from the pedigree and attempts to correct all eligible parentage records. In this setting, the search is constrained by pedigree-based rules such as **delta_generation** or **delta_days**.
+   JPEC automatically derives target offspring and candidate parents from the pedigree and attempts to correct all eligible parentage records. In this setting, the search is constrained by pedigree-based rules such as **--delta_gen** or **--delta_day**.
 
 2. **Pedigree + target offspring**  
    JPEC attempts to correct the parents of the specified target offspring, while candidate parents are identified from the pedigree under the same pedigree-based constraints.
@@ -157,7 +157,7 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 
 ◼ **--gen [number]**: generation gap between offspring and parent when the 4th column of pedigree is generation. Default: **1**.
 
-◼ **--int [number]**: minimum offspring–parent interval (in days), used when the 4th column of the pedigree file is the birth date. If the user does not specify this option, it is computed **automatically** as the minimum birth-date difference across all recorded offspring–parent pairs in the pedigree.
+◼ **--day [number]**: minimum offspring–parent interval (in days), used when the 4th column of the pedigree file is the birth date. If the user does not specify this option, it is computed **automatically** as the minimum birth-date difference across all recorded offspring–parent pairs in the pedigree.
 
 ◼ **--offspring [target_individuals.txt]**: file of target individuals, one column.
 
