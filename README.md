@@ -205,9 +205,8 @@ JPEC provides an optional sire–dam swap checking module. Depending on the `--s
 
 The swap-check mode is controlled by: `--sex-swap` (default: `nothing`)
 
-Supported values are:
+optional values are:
 
-- **`nothing`** : do not perform sire–dam swap correction
 - **`pedigree`** : use pedigree evidence only
 - **`chrX`** : use chrX evidence only
 - **`pedigree_chrX`** : use both pedigree and chrX evidence; if they conflict, pedigree has priority
@@ -224,13 +223,12 @@ For example, if an ID appears 10 times in the pedigree and 9 of those appearance
 
 For example, if an ID appears only once or twice in the pedigree, there is usually not enough information to decide whether it is mainly sire-like or dam-like. With `--swap-min-count 3`, JPEC only evaluates IDs that appear at least 3 times across the sire and dam columns combined.
 
-Larger values require stronger pedigree support before an ID is considered for swap checking.
 
 ###### **Optional chrX VCF for swap checking**
 
 If the sire–dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
 
-If the sex chromosome in the VCF is not labeled as `X`, users can specify the corresponding chromosome label(s) with `--chrX-names` (default: `X,chrX`) so that JPEC can recognize and read the sex chromosome correctly.
+If the sex chromosome in the VCF is not labeled as `X`, users can specify the corresponding chromosome label(s) with `--chrX-names` (e.g.: `19`) so that JPEC can recognize chromsome 19 as sex chromosome and read the sex chromosome correctly.
 
 chrX-based swap checking is controlled by:
 
