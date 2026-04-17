@@ -198,12 +198,10 @@ Minimum offspring–parent interval (in days), used when the 4th column of the p
 
 ◼ **--parents [file]**: file of candidate parents, one column.
 
-##### **Optional sire–dam swap checking:**
-
-### 4. Optional inputs for sire–dam swap checking
+##### 4. Optional inputs for sire–dam swap checking
 
 JPEC provides an optional sire–dam swap checking module. Depending on the `--sex-swap` setting, this module can use:
-#### Swap-check mode
+###### Swap-check mode
 
 The swap-check mode is controlled by:
 
@@ -217,7 +215,7 @@ Supported values are:
 - **`pedigree_chrX`** : use both pedigree and chrX evidence; if they conflict, pedigree has priority
 - **`chrX_pedigree`** : use both pedigree and chrX evidence; if they conflict, chrX has priority
 
-#### Pedigree-based swap checking
+###### Pedigree-based swap checking
 When `--sex-swap pedigree` is used, JPEC evaluates whether an individual appears predominantly in the sire column or the dam column across the pedigree. This can help identify records in which sire and dam IDs may have been entered in reversed columns.
 
 **`--swap-threshold`**  defines how strongly an individual must be associated with one pedigree column before JPEC treats it as role-specific.
@@ -230,7 +228,7 @@ For example, if an ID appears only once or twice in the pedigree, there is usual
 
 Larger values require stronger pedigree support before an ID is considered for swap checking.
 
-#### Optional chrX VCF for swap checking
+###### Optional chrX VCF for swap checking
 
 If the sire–dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
 
