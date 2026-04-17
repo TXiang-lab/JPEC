@@ -198,14 +198,12 @@ Minimum offspring–parent interval (in days), used when the 4th column of the p
 
 ◼ **--parents [file]**: file of candidate parents, one column.
 
-##### **Optional inputs for sire–dam swap checking**
+##### **Optional inputs for sire–dam swap checking:**
 
 JPEC provides an optional sire–dam swap checking module. Depending on the `--sex-swap` setting, this module can use:
 ###### **Swap-check mode**
 
-The swap-check mode is controlled by:
-
-- `--sex-swap` (default: `nothing`)
+The swap-check mode is controlled by: `--sex-swap` (default: `nothing`)
 
 Supported values are:
 
