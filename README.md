@@ -152,6 +152,8 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
   --blocks plink.blocks.det \      # LD blocks
   --vcf haplotype.vcf \            # genotypes
   --ped ped.txt \                  # pedigree file with 4 columns
+  --offspring off_id.txt \		   # target offspring ids list file
+  --parents par_id.txt \ 		   # candiate parents ids list file
   --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
   --score \                        # write the score matrix for each comparison between offspring and parents
   --o /result \                    # output path of JPEC
@@ -250,6 +252,23 @@ For example:
 
 When both pedigree and chrX evidence are used together, JPEC integrates the two sources according to the selected `--sex-swap` mode.
 
+##### Example of swap check
+
+```bash
+../bin/JPEC \
+  --blocks plink.blocks.det \      # LD blocks
+  --vcf haplotype.vcf \            # genotypes
+  --ped ped.txt \                  # pedigree file with 4 columns
+  --offspring off_id.txt \		   # target offspring ids list file
+  --parents par_id.txt \ 		   # candiate parents ids list file
+  --sex-swap pedigree_chrX \       # options sex swap check, see detials in the delow
+  --chrX-vcf-file chrX.vcf \	   # options sex swap check based on chrX file, see detials in the delow
+  --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
+  --score \                        # write the score matrix for each comparison between offspring and parents
+  --o /result \                    # output path of JPEC
+  --julia-args --threads=20        # Julia arguments: specify the number of threads used
+
+```
 
 ## <u>Output</u>
 
