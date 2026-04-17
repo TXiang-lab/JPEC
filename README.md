@@ -67,7 +67,7 @@ The first four required columns are:
 	4.	**generation** (e.g. 1 or 1.5, as a numeric value) or birth date (e.g. 20231001, as an integer)
 
 An optional fifth column, sex, may also be included and should be coded as:
-	**F** for female
+	**F** for female and
 	**M** for male
 
 For pedigrees without generation records, we recommend using the `trace_pedigree` function in our R package [blupADC](https://github.com/TXiang-lab/blupADC) to trace and reorder the pedigree from older to younger individuals. The reordered pedigree can then be used directly as the input pedigree for JPEC.
@@ -226,7 +226,7 @@ For example, if an ID appears only once or twice in the pedigree, there is usual
 
 ###### **Optional chrX VCF for swap checking**
 
-If the sire–dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
+If the sire-dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
 
 If the sex chromosome in the VCF is not labeled as `X`, users can specify the corresponding chromosome label(s) with `--chrX-names` (e.g.: `19`) so that JPEC can recognize chromsome 19 as sex chromosome and read the sex chromosome correctly.
 
