@@ -147,36 +147,84 @@ Example command for phasing and imputing with **PLink1.9**:
 plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 ```
 
+## <u>Usage</u>
+
+#### 🌈Usage of JPEC in Linux
+
+```bash
+../bin/JPEC \
+  --blocks plink.blocks.det \      # LD blocks
+  --vcf haplotype.vcf \            # genotypes
+  --ped ped.txt \                  # pedigree file with 4 columns
+  --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
+  --score \                        # write the score matrix for each comparison between offspring and parents
+  --o /result \                    # output path of JPEC
+  --julia-args --threads=20        # Julia arguments: specify the number of threads used
+```
+
+
+##### **Main Parameter:**
+
+◼ **--blocks [file]**: LD block file, e.g. plink.blocks.det.
+
+◼ **--vcf [file]**: Phased genotype file in VCF format.
+
+◼ **--ped [file]**: Pedigree file with 4 or 5 columns.
+
+◼ **--findex [number]**
+Parent identification mode:
+	•	1 = sire only
+	•	2 = dam only
+	•	3 = both sire and dam
+
+◼ **--ped [file]**: Pedigree file with 4 or 5 columns.
+
+◼ **--score**: Write the score matrix for each comparison between offspring and candidate parents.
+
+◼ **--o [path]**: Output directory.
+
+◼ **--julia-args --threads=[number]**: Number of Julia threads.
+
+##### **Additional Parameter:**
+
+◼ **--gen [number]**: 
+  Minimum generation gap between offspring and parent when the 4th column of the pedigree is **generation**. This parameter can be numeric, for example 1, 1.5, or 2.0.
+Default: 1
+
+◼ **--day [number]**:
+Minimum offspring–parent interval (in days), used when the 4th column of the pedigree file is **birth date**. If this option is not specified, JPEC computes it automatically as the minimum birth-date difference across all recorded offspring–parent pairs in the pedigree.
+
+◼ **--offspring [file]**: file of target offsprings, one column.
+
+◼ **--parents [file]**: file of candidate parents, one column.
+
+##### **Optional sire–dam swap checking:**
+
 ### 4. Optional inputs for sire–dam swap checking
 
 JPEC provides an optional sire–dam swap checking module. Depending on the `--sex-swap` setting, this module can use:
+#### Swap-check mode
 
-- **pedigree evidence only**
-- **chrX-based sex inference only**
-- **both pedigree and chrX evidence together**
+The swap-check mode is controlled by:
+
+- `--sex-swap` (default: `nothing`)
+
+Supported values are:
+
+- **`nothing`** : do not perform sire–dam swap correction
+- **`pedigree`** : use pedigree evidence only
+- **`chrX`** : use chrX evidence only
+- **`pedigree_chrX`** : use both pedigree and chrX evidence; if they conflict, pedigree has priority
+- **`chrX_pedigree`** : use both pedigree and chrX evidence; if they conflict, chrX has priority
 
 #### Pedigree-based swap checking
-
 When `--sex-swap pedigree` is used, JPEC evaluates whether an individual appears predominantly in the sire column or the dam column across the pedigree. This can help identify records in which sire and dam IDs may have been entered in reversed columns.
 
-Pedigree-based swap checking is controlled by:
-
-- `--swap-threshold` (default: `0.90`)
-- `--swap-min-count` (default: `3`)
-
-**Meaning of `--swap-threshold`**  
-This parameter defines how strongly an individual must be associated with one pedigree column before JPEC treats it as role-specific.
+**`--swap-threshold`**  defines how strongly an individual must be associated with one pedigree column before JPEC treats it as role-specific.
 
 For example, if an ID appears 10 times in the pedigree and 9 of those appearances are in the sire column, then its sire-column proportion is `0.90`. With `--swap-threshold 0.90`, this ID would be treated as a sire-like ID. Similarly, if an ID appears mainly in the dam column, it can be treated as dam-like.
 
-Larger values make the rule more conservative. For example:
-
-- `0.90` means the ID must appear in the same column in more than 90% of its pedigree occurrences
-- `0.95` is stricter
-- `0.80` is more permissive
-
-**Meaning of `--swap-min-count`**  
-This parameter defines the minimum number of pedigree occurrences required before an ID is evaluated in pedigree-based swap checking.
+**`--swap-min-count`**  defines the minimum number of pedigree occurrences required before an ID is evaluated in pedigree-based swap checking.
 
 For example, if an ID appears only once or twice in the pedigree, there is usually not enough information to decide whether it is mainly sire-like or dam-like. With `--swap-min-count 3`, JPEC only evaluates IDs that appear at least 3 times across the sire and dam columns combined.
 
@@ -186,12 +234,7 @@ Larger values require stronger pedigree support before an ID is considered for s
 
 If the sire–dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
 
-This file should contain markers only from **chrX** (or chromosome labels specified by `--chrX-names`), and it is used to infer sex from heterozygosity on the sex chromosome.
-
-Examples of supported chromosome labels include:
-
-- `X`
-- `chrX`
+If the sex chromosome in the VCF is not labeled as `X`, users can specify the corresponding chromosome label(s) with `--chrX-names` (default: `X,chrX`) so that JPEC can recognize and read the sex chromosome correctly.
 
 chrX-based swap checking is controlled by:
 
@@ -217,44 +260,6 @@ For example:
 
 When both pedigree and chrX evidence are used together, JPEC integrates the two sources according to the selected `--sex-swap` mode.
 
-#### Swap-check mode
-
-The swap-check mode is controlled by:
-
-- `--sex-swap` (default: `nothing`)
-
-Supported values are:
-
-- `nothing` : do not perform sire–dam swap correction
-- `pedigree` : use pedigree evidence only
-- `chrX` : use chrX evidence only
-- `pedigree_chrX` : use both pedigree and chrX evidence; if they conflict, pedigree has priority
-- `chrX_pedigree` : use both pedigree and chrX evidence; if they conflict, chrX has priority
-- 
-## <u>Usage</u>
-
-#### 🌈Usage of JPEC in Linux
-
-```bash
-../bin/JPEC \
-  --blocks plink.blocks.det \      # LD blocks
-  --vcf haplotype.vcf \            # genotypes
-  --ped ped.txt \                  # pedigree file with 4 columns
-  --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
-  --score \                        # write the score matrix for each comparison between offspring and parents
-  --o /result \                    # output path of JPEC
-  --julia-args --threads=20        # Julia arguments: specify the number of threads used
-```
-
-##### **Parameter:**
-
-◼ **--gen [number]**: generation gap between offspring and parent when the 4th column of pedigree is generation. Default: **1**.
-
-◼ **--day [number]**: minimum offspring–parent interval (in days), used when the 4th column of the pedigree file is the birth date. If the user does not specify this option, it is computed **automatically** as the minimum birth-date difference across all recorded offspring–parent pairs in the pedigree.
-
-◼ **--offspring [target_individuals.txt]**: file of target individuals, one column.
-
-◼ **--parents [candidate_individuals.txt]**: file of candidate individuals, one column.
 
 ## <u>Output</u>
 
