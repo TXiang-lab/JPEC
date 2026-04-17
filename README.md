@@ -157,7 +157,7 @@ plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
   --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
   --score \                        # write the score matrix for each comparison between offspring and parents
   --o /result \                    # output path of JPEC
-  --julia-args --threads=20        # Julia arguments: specify the number of threads used
+  --julia-args --threads=2        # Julia arguments: specify the number of threads used
 ```
 
 
@@ -266,7 +266,7 @@ When both pedigree and chrX evidence are used together, JPEC integrates the two 
   --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
   --score \                        # write the score matrix for each comparison between offspring and parents
   --o /result \                    # output path of JPEC
-  --julia-args --threads=20        # Julia arguments: specify the number of threads used
+  --julia-args --threads=2        # Julia arguments: specify the number of threads used
 
 ```
 
