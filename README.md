@@ -39,19 +39,17 @@ This function is useful for identifying records in which the sire and dam may ha
 
 ## <u>Installation</u>
 
-⚠️ **Attention:** You may not be able to download `JPEC` using
+⚠️ **Attention:** You should download `JPEC` from the Releases
 
 ```bash
-git clone https://github.com/TXiang-lab/JPEC.git
-
 #### Install JEPC package from Releases
 
 ```R
-wget https://github.com/TXiang-lab/JPEC/releases/download/V1.1.0/JPECCompiled.zip
-unzip JPECCompiled.zip
+wget https://github.com/TXiang-lab/JPEC/releases/download/V1.1.0/JPECCompiled.tar.gz
+tar -xzvf JPECCompiled.tar.gz
 ```
 
-👉 **Note**: If (Chinese mainland) users can not download JPEG using the method above, please click on **V1.1.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.1.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC**.
+👉 **Note**: If users can not download JPEG using the method above, please click on **V1.1.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.1.0), and click on **JPECCompiled.tar.gz** in **Assets** to download **JPEC**.
 
 
 ### <u>Input</u>
