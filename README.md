@@ -47,21 +47,30 @@ git clone https://github.com/TXiang-lab/JPEC.git
 #### Install JEPC package from Releases
 
 ```R
-wget https://github.com/TXiang-lab/JPEC/releases/download/V1.0.0/JPECCompiled.zip
+wget https://github.com/TXiang-lab/JPEC/releases/download/V1.1.0/JPECCompiled.zip
 unzip JPECCompiled.zip
 ```
 
-👉 **Note**: If (Chinese mainland) users can not download JPEG using the method above, please click on **V1.0.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.0.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC**.
+👉 **Note**: If (Chinese mainland) users can not download JPEG using the method above, please click on **V1.1.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.1.0), and click on **JPECCompiled.zip** in **Assets** to download **JPEC**.
 
 
 ### <u>Input</u>
 
 #### 1.Pedigree
 
-It should contain four or five columns, with no column names. The four required columns are **id**, **sire**, **dam**, and either **generation** (e.g. `1`, as an integer) or **birth date** (e.g. `20231001`, as an integer). An optional fifth column, **sex**, may also be included and should be coded as **F** for female or **M** for male. 
+The pedigree file should contain four or five columns and no column names.
 
-For pedigrees with overlapping generations such as `1.5`, we recommend using the `trace_pedigree` function in the R package [blupADC](https://github.com/TXiang-lab/blupADC) to trace and reorder the pedigree from older to younger individuals. The reordered pedigree can then be used directly as the input pedigree for JPEC.
+The first four required columns are:
+	1.	**id**
+	2.	**sire**
+	3.	**dam**
+	4.	**generation** (e.g. 1 or 1.5, as a numeric value) or birth date (e.g. 20231001, as an integer)
 
+An optional fifth column, sex, may also be included and should be coded as:
+	•	**F** for female
+	•	**M** for male
+
+For pedigrees without generation records, we recommend using the `trace_pedigree` function in our R package [blupADC](https://github.com/TXiang-lab/blupADC) to trace and reorder the pedigree from older to younger individuals. The reordered pedigree can then be used directly as the input pedigree for JPEC.
 
 ``` R
 54903 0 0 1
@@ -79,7 +88,7 @@ For pedigrees with overlapping generations such as `1.5`, we recommend using the
 
 #### 2.Genotypes
 
-Genotypes should be phased into haplotypes in VCF format. We recommend using **Beagle 5.2** for phasing.
+Genotypes should be phased into haplotypes in VCF format. One option is using **Beagle 5.2** for phasing.
 
 ``` R
 ##fileformat=VCFv4.2
@@ -138,6 +147,90 @@ Example command for phasing and imputing with **PLink1.9**:
 plink --vcf haplotype.vcf --blocks no-pheno-req --blocks-max-kb 200
 ```
 
+### 4. Optional inputs for sire–dam swap checking
+
+JPEC provides an optional sire–dam swap checking module. Depending on the `--sex-swap` setting, this module can use:
+
+- **pedigree evidence only**
+- **chrX-based sex inference only**
+- **both pedigree and chrX evidence together**
+
+#### Pedigree-based swap checking
+
+When `--sex-swap pedigree` is used, JPEC evaluates whether an individual appears predominantly in the sire column or the dam column across the pedigree. This can help identify records in which sire and dam IDs may have been entered in reversed columns.
+
+Pedigree-based swap checking is controlled by:
+
+- `--swap-threshold` (default: `0.90`)
+- `--swap-min-count` (default: `3`)
+
+**Meaning of `--swap-threshold`**  
+This parameter defines how strongly an individual must be associated with one pedigree column before JPEC treats it as role-specific.
+
+For example, if an ID appears 10 times in the pedigree and 9 of those appearances are in the sire column, then its sire-column proportion is `0.90`. With `--swap-threshold 0.90`, this ID would be treated as a sire-like ID. Similarly, if an ID appears mainly in the dam column, it can be treated as dam-like.
+
+Larger values make the rule more conservative. For example:
+
+- `0.90` means the ID must appear in the same column in more than 90% of its pedigree occurrences
+- `0.95` is stricter
+- `0.80` is more permissive
+
+**Meaning of `--swap-min-count`**  
+This parameter defines the minimum number of pedigree occurrences required before an ID is evaluated in pedigree-based swap checking.
+
+For example, if an ID appears only once or twice in the pedigree, there is usually not enough information to decide whether it is mainly sire-like or dam-like. With `--swap-min-count 3`, JPEC only evaluates IDs that appear at least 3 times across the sire and dam columns combined.
+
+Larger values require stronger pedigree support before an ID is considered for swap checking.
+
+#### Optional chrX VCF for swap checking
+
+If the sire–dam swap checking module uses chrX evidence, an additional **chrX VCF file** can be provided.
+
+This file should contain markers only from **chrX** (or chromosome labels specified by `--chrX-names`), and it is used to infer sex from heterozygosity on the sex chromosome.
+
+Examples of supported chromosome labels include:
+
+- `X`
+- `chrX`
+
+chrX-based swap checking is controlled by:
+
+- `--chrX-vcf-file` (default: not used)
+- `--chrX-names` (default: `X,chrX`)
+- `--male-het-range` (default: `0.0,0.05`)
+- `--female-het-range` (default: `0.20,1.0`)
+
+The sex inference is controlled by two heterozygosity intervals:
+
+- `male_het_range`
+- `female_het_range`
+
+For example:
+
+- **Pig chrX**
+  - `male_het_range = (0.0, 0.05)`
+  - `female_het_range = (0.20, 1.0)`
+
+- **Chicken chrZ** (opposite heterozygosity pattern)
+  - `male_het_range = (0.20, 1.0)`
+  - `female_het_range = (0.0, 0.05)`
+
+When both pedigree and chrX evidence are used together, JPEC integrates the two sources according to the selected `--sex-swap` mode.
+
+#### Swap-check mode
+
+The swap-check mode is controlled by:
+
+- `--sex-swap` (default: `nothing`)
+
+Supported values are:
+
+- `nothing` : do not perform sire–dam swap correction
+- `pedigree` : use pedigree evidence only
+- `chrX` : use chrX evidence only
+- `pedigree_chrX` : use both pedigree and chrX evidence; if they conflict, pedigree has priority
+- `chrX_pedigree` : use both pedigree and chrX evidence; if they conflict, chrX has priority
+- 
 ## <u>Usage</u>
 
 #### 🌈Usage of JPEC in Linux
