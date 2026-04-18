@@ -262,8 +262,8 @@ When both pedigree and chrX evidence are used together, JPEC integrates the two 
   --ped example_data/ped.txt \                  # pedigree file with 4 columns
   --offspring example_data/off_id.txt \		   # target offspring ids list file
   --parents example_data/par_id.txt \ 		   # candiate parents ids list file
-  --sex-swap pedigree_chrX \       # options sex swap check, see detials in the delow
-  --chrX-vcf-file example_data/chrX.vcf \	   # options sex swap check based on chrX file, see detials in the delow
+  --sex-swap pedigree_chrX \       # options sex swap check, see detials in the above
+  --chrX-vcf-file example_data/chrX.vcf \	   # options sex swap check based on chrX file, see detials in the above
   --findex 1 \                     # parent identification: 1 = Sire (father) only, 2 = Dam (mother) only, 3 = both sire and dam
   --score \                        # write the score matrix for each comparison between offspring and parents
   --o /result \                    # output path of JPEC
