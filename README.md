@@ -44,9 +44,10 @@ This function is useful for identifying records in which the sire and dam may ha
 ```bash
 #### Install JEPC package from Releases
 
-```R
+
 wget https://github.com/TXiang-lab/JPEC/releases/download/V1.1.0/JPECCompiled.tar.gz
 tar -xzvf JPECCompiled.tar.gz
+
 ```
 
 👉 **Note**: If users can not download JPEG using the method above, please click on **V1.1.0** under **Releases** on the webpage (https://github.com/TXiang-lab/JPEC/releases/tag/V1.1.0), and click on **JPECCompiled.tar.gz** in **Assets** to download **JPEC**.
