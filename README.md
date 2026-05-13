@@ -1,4 +1,5 @@
 # JPEC <img src="https://img.shields.io/badge/Issues-%2B-brightgreen.svg" /><img src="https://img.shields.io/badge/license-GPL3.0-blue.svg" />
+
 JPEC is a Julia tool for pedigree error correction in animal and plant breeding.
 
 It compares phased genotype haplotypes between offspring and candidate parents, then reports the most likely sire or dam. It can be used to check recorded pedigree information, find likely parentage mistakes, and generate a corrected pedigree.
@@ -8,7 +9,6 @@ It compares phased genotype haplotypes between offspring and candidate parents, 
 - [What JPEC Needs](#what-jpec-needs)
 - [Installation](#installation)
 - [Input Files](#input-files)
-- [Missing Values](#missing-values)
 - [How To Run](#how-to-run)
 - [Command-Line Options](#command-line-options)
 - [Output Files](#output-files)
@@ -74,7 +74,7 @@ Optional column:
 | ------ | ------- | ---------------------------- |
 | 5      | Sex     | `M` for male, `F` for female |
 
-Use `0` for unknown sire or dam.
+Use `0`, `NA`, or `-999` for unknown sire or dam. JPEC converts these values to `0` internally.
 
 Example:
 
@@ -159,21 +159,10 @@ Optional. Use one ID per line. No header is required.
 69141
 ```
 
-<a id="missing-values"></a>
 
-## Missing Values
+#### Missing Values
 
-Based on the current code, please use `0` for missing values in the pedigree.
-
-| File / field                  | Accepted missing value | Notes                                                        |
-| ----------------------------- | ---------------------- | ------------------------------------------------------------ |
-| Pedigree sire and dam columns | `0`                    | This is the recommended and supported code for unknown parents. |
-| Pedigree birth-date column    | `0`                    | When birth dates are used, `0` is internally treated as `20010101` for date parsing. |
-| Offspring list / parent list  | none                   | Keep one valid ID per line. Do not include `NA` rows.        |
-| Main phased VCF genotype      | not recommended        | The main VCF reader expects phased genotypes such as `0|0`, `0|1`, `1|0`, and `1|1`. Missing VCF genotypes such as `./.` are not handled as true missing values in the main matching code. |
-| chrX VCF for swap checking    | `.` in genotype        | The chrX swap-check reader treats genotypes containing `.` as missing. |
-
-Do not use `NA` in the pedigree. In the current code, `NA` is treated as a normal string, not as a missing value. For example, `NA` in sire or dam columns is not equivalent to `0`, and `NA` in the birth-date column can cause date parsing to fail.
+In the pedigree file, JPEC accepts only `0`, `NA`, and `-999` as missing-value codes. 
 
 <a id="how-to-run"></a>
 
@@ -269,7 +258,7 @@ When `--day` is not provided and the fourth pedigree column looks like birth dat
 | -------------------------- | ------------------------------------------------------------ | ----------------- |
 | `--o DIR`                  | Output directory. JPEC creates it if needed.                 | current directory |
 | `--score`                  | Write the full offspring-by-parent score matrix.             | off               |
-| `--score-threshold NUMBER` | Minimum score required before JPEC accepts a matched parent for correction/reporting. | `0.9`             |
+| `--score-threshold NUMBER` | Minimum score required before JPEC accepts a matched parent for correction/reporting. | `0.5`             |
 | `--noMC`                   | Skip MC-block adjustment.                                    | off               |
 | `--nGC NUMBER`             | Control how often garbage collection is triggered during MC-score calculation. Usually leave this unset. | automatic         |
 | `--julia-args --threads=N` | Run with `N` Julia threads when using the compiled binary.   | Julia default     |
