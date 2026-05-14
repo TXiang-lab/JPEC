@@ -447,13 +447,5 @@ JPEC expects phased genotypes such as `0|1`, not unphased genotypes such as `0/1
 
 JPEC only analyzes individuals that are present in the VCF. If an offspring or candidate parent is absent from the VCF, it is removed from the matching set.
 
-### I used `--score` but cannot find `scored_matrix`
-
-The current code writes the file name as:
-
-```text
-JPEC_Sire_socred_matrix.txt
-JPEC_Dam_socred_matrix.txt
-```
 
 The word `socred` is kept here because it is the current output name in the code.
