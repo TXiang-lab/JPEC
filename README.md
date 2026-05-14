@@ -9,7 +9,6 @@ It compares phased genotype haplotypes between offspring and candidate parents, 
 - [What JPEC Needs](#what-jpec-needs)
 - [Installation](#installation)
 - [Input Files](#input-files)
-- [Missing Values](#missing-values)
 - [How To Run](#how-to-run)
 - [Command-Line Options](#command-line-options)
 - [Output Files](#output-files)
@@ -161,22 +160,6 @@ Optional. Use one ID per line. No header is required.
 69141
 ```
 
-<a id="missing-values"></a>
-
-## Missing Values
-
-In the pedigree file, JPEC accepts only `0`, `NA`, and `-999` as missing-value codes. These values are normalized internally before analysis across the whole pedigree table.
-
-| File / field                            | Accepted missing value | Notes                                                        |
-| --------------------------------------- | ---------------------- | ------------------------------------------------------------ |
-| Any pedigree column                     | `0`, `NA`, `-999`      | These three codes are normalized internally to `0` before analysis. |
-| Pedigree sire and dam columns           | `0`, `NA`, `-999`      | All three are treated as unknown parent IDs.                 |
-| Pedigree generation / birth-date column | `0`, `NA`, `-999`      | All three are converted internally to numeric `0`. When birth dates are used, `0` is treated as `20010101` for date parsing. |
-| Offspring list / parent list            | none                   | Keep one valid ID per line. Do not include `NA` rows.        |
-| Main phased VCF genotype                | not recommended        | The main VCF reader expects phased genotypes such as `0|0`, `0|1`, `1|0`, and `1|1`. Missing VCF genotypes such as `./.` are not handled as true missing values in the main matching code. |
-| chrX VCF for swap checking              | `.` in genotype        | The chrX swap-check reader treats genotypes containing `.` as missing. |
-
-Other missing-value labels, such as `N/A`, `.`, blank cells, or lowercase `na`, are not treated as missing pedigree values.
 
 <a id="how-to-run"></a>
 
