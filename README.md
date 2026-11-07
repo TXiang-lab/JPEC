@@ -271,21 +271,6 @@ offspring recorded top1 score oh_rate case group limit
 
 <a id="larger-example"></a>
 
-## Larger Example
-
-`JPEC_sim_example_medium.tar.gz` (85 MB; 1.1 GB unpacked; release asset) is a larger simulated data set: 8,645 individuals and 7,415 target offspring, 569 of them with a wrong recorded sire. It has more than 5,000 known non-parents per role, so the default limit is estimated at 0.1 % without a warning.
-
-```bash
-tar -xzf JPEC_sim_example_medium.tar.gz
-cd JPEC_sim_example_medium
-/path/to/JPECCompiled/bin/JPEC \
-  --blocks example_data_sim_medium/plink.blocks.det \
-  --vcf example_data_sim_medium/haplotype.vcf \
-  --ped example_data_sim_medium/ped.txt \
-  --findex 3 \
-  --o result_sim_medium \
-  --julia-args --threads=8
-```
 
 About 4 minutes with 8 threads and 1.4 GB memory. Expected result: all 569 errors corrected and no wrong changes; 30 further wrong records of parent individuals are corrected as well. Reference output and simulation truth are included in the package.
 
