@@ -214,21 +214,6 @@ Options before `--julia-args` are JPEC options; `--julia-args` and the thread se
 | `--no-infer-sex`                                        | No inference                                      | off        |
 | `--allow-unknown-sex`                                   | Let candidates of unknown sex compete             | off        |
 
-### Write-Back Rule
-
-Use only one of `--oh-gate`, `--top1`, `--score-threshold`, `--accept-error-rate`, `--rule-file`.
-
-| Option                             | Meaning                                                      | Default     |
-| ---------------------------------- | ------------------------------------------------------------ | ----------- |
-| `--oh-gate np`                     | Top-1 below the adaptive OH limit                            | **default** |
-| `--oh-gate-far a`                  | False-acceptance rate for `np`                               | `0.001`     |
-| `--oh-gate R`                      | Top-1 below a fixed OH-rate limit `R` (e.g. `0.004`)         |             |
-| `--oh-gate gap` / `--oh-gate none` | Gap rule / no OH limit (pure top-1)                          |             |
-| `--oh-gate-groups FILE`            | Separate limits per group (`ID GROUP` per line, e.g. genotyping batch) | one group   |
-| `--top1`                           | Pure top-1: the best candidate replaces the recorded parent  |             |
-| `--score-threshold T`              | Top-1 only when score ≥ `T` (`0.5` = V1.1.0 behaviour)       |             |
-| `--accept-error-rate 0.01\|0.05`   | Top-1 with a pre-calibrated score threshold                  |             |
-| `--rule-file FILE`                 | Advanced: a frozen, pre-calibrated rule                      |             |
 
 ### Scoring
 
